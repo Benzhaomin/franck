@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="css/lib/normalize.min.css" rel="stylesheet" type="text/css" />
+    <link href="css/franck.css" rel="stylesheet" type="text/css" />
+    <title>Franck Video Browser</title>
+</head>
+<body>
+    
+    <nav class="main">
+        <ul class="clearfix">
+            <li>
+                <a class="preset" href="http://www.jeuxvideo.com/gaming_live.htm">Gaming Live</a>
+            </li>
+            <li>
+                <a class="preset" href="http://www.jeuxvideo.com/chroniques-video-speed-game.htm">Speed Game</a>
+            </li>
+            <li>
+                <a class="preset" href="r 12">Random</a>
+            </li>
+            <li>
+                <form method="post" action="#">
+                    <input type="search" name="url" id="url" placeholder="url or command">
+                    <input type="submit" style="display:none" />
+                </form>
+            </li>
+        </ul>
+    </nav>
+    
+    <section id="results"></section>
+    
+    <script type="text/template" id="video-template">
+        <article>
+            <div class="background b-lazy loading" data-src="{{cover}}"></div>
+            <div class="mask">
+                <h2><a href="{{url}}" target="_blank">{{title}}</a></h2>
+                
+                <section class="details">                
+                    <ul class="sources">
+                        <li>
+                            <a href="{{1080p-href}}" target="_blank">1080p</a>
+                        </li>
+                        <li>
+                            <a href="{{720p-href}}" target="_blank">720p</a>
+                        </li>
+                        <li>
+                            <a href="{{400p-href}}" target="_blank">400p</a>
+                        </li>
+                        <li>
+                            <a href="{{272p-href}}" target="_blank">272p</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </article>
+    </script>
+    
+    <script src="js/libs/jquery.min.js"></script>
+    <script src="js/libs/blazy.min.js"></script>
+    <script src="js/video.js"></script>
+    <script src="js/layout.js"></script>
+    <script src="js/franck.js"></script>
+</body>
+</html>

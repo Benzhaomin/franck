@@ -1,0 +1,123 @@
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    background: repeat top left fixed black;
+    min-height: 100%;
+    color: white;
+    font-size: 12px;
+}
+body {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, ul {
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+    text-shadow: 0 1px rgba(0, 0, 0, 0.5);
+}
+a:hover {
+    text-shadow: 0 0 10px;
+}
+
+nav.main {
+}
+nav.main ul {
+    list-style-type: none;
+}
+nav.main li {
+    float: left;
+    line-height: 34px;
+    padding: 0px 10px;
+}
+input {
+    width: 100%;
+    border: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    color: black;
+    min-width: 500px;
+}
+
+/* videos */
+article {
+    float: left;
+    width: 720px;
+    height: 400px;
+    position: relative;
+    background: #1E1E1E;
+}
+article .background,
+article .mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+/* dark background */
+article:hover .mask {
+    background: rgba(0,0,0,0.3);
+}
+/* blurred background */
+article:hover .background {
+    -webkit-filter:blur(4px);
+    filter:url("../svg/blur.svg#blur");
+    filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='4');
+}
+
+/* video title */
+article h2 {
+    padding: 15px;
+    font-variant: small-caps;
+}
+article h2 a {
+    text-shadow: -2px 1px 2px #000000;
+}
+
+/* video details */
+article .details {
+    display: none;
+    padding: 0px 15px 15px 15px;
+}
+article:hover .details {
+    display: block;
+}
+a[href="#"] {
+    display: none;
+}
+
+/* timeline */
+.timeline {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: url("../img/play.png") no-repeat center center #151515;
+    width: 162px;
+    height: 90px;
+    color: black;
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
+}
+.timeline:hover {
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+/* sources */
+ul.sources {
+    list-style: none;
+}
+ul.sources li a {
+    font-size: 14px;
+}
