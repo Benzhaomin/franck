@@ -8,3 +8,4 @@ itsdangerous==0.24
 six==1.8.0
 wsgiref==0.1.2
 xmltodict==0.9.0
+beautifulsoup4==4.3.2
