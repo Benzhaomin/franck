@@ -7,6 +7,7 @@ function Video(data) {
     this.title = data['title'];
     this.sources = data['sources'];
     this.url = data['url'];
+    this.timeline = data['timeline'];
     this.config = data['config'];
 }
 
@@ -19,8 +20,9 @@ Video.prototype.render = function() {
     article = article.replaceAll('{{title}}', this.title);
     article = article.replaceAll('{{url}}', this.url);
     article = article.replaceAll('{{config}}', this.config);
+    article = article.replaceAll('{{timeline}}', this.timeline);
     
-    //$(document).find('[data-binding="timeline"]').css('background-image', 'url('+this.timeline+')');
+    $(document).find('[data-binding="timeline"]').css('background-image', 'url('+this.timeline+')');
     
     $.each(["1080p", "720p", "400p", "272p"], function(index, value) {
         // try to get the video in a given format

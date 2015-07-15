@@ -32,4 +32,5 @@ class Video:
       'sources': { item["label"]: {'file': item["file"], 'size': 0} for item in config["sources"]},
       'iframe':  'http://www.jeuxvideo.com/videos/iframe/' + video_id,
       'description': info['description'],
+      'timeline': info['thumbnail'].replace('high.jpg', '0000.jpg'),
     }

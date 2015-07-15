@@ -66,6 +66,9 @@ article .mask {
     right: 0;
     bottom: 0;
 }
+article .background {
+    background-size: cover;
+}
 /* dark background */
 article:hover .mask {
     background: rgba(0,0,0,0.3);
@@ -104,8 +107,8 @@ a[href="#"] {
     bottom: 20px;
     right: 20px;
     background: url("../img/play.png") no-repeat center center #151515;
-    width: 162px;
-    height: 90px;
+    width: 108px;
+    height: 60px;
     color: black;
     cursor: pointer;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);

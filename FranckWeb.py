@@ -41,6 +41,8 @@ def videos(url):
     # TODO: check args
     
     videos_info = api.videos(url)
+    if len(videos_info) == 0:
+        videos_info = [api.video(url)]
     
     return jsonify({'videos': videos_info}), 200
     

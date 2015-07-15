@@ -49,7 +49,7 @@ $(document).ready(function() {
     function play($timeline) {
         if ($timeline.attr("data-mode") == "stopped") {
             $timeline.css({"background-image": "url('"+$timeline.attr("data-timeline")+"')"});
-            $timeline.css({"background-size": "1620px auto"});
+            $timeline.css({"background-size": "1080px auto"});
             $timeline.css({"background-position": "0px 0px"});
         }
         
