@@ -1,16 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import concurrent.futures
 
 import franck.utils.parser as parser
 
-# returns all the video url found on all pages of one section
-# can be run from any page of the section (eg. page 300 of 310)
+# returns all the video page url found in a whole section
 def crawl(url):
   # get an index of all the pages in the section
   pages = parser.index(url)
-  result = list()
+  result = []
   
   # parse each page of the section to find video page urls
   with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
@@ -24,6 +24,7 @@ def crawl(url):
 
 if __name__ == '__main__':
   if len(sys.argv) < 2:
+    # example: Tous les gaming lives
     url = "http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=296"
   else:
     url = sys.argv[1]

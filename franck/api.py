@@ -1,14 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import franck.utils.parser as parser
 import franck.utils.crawler as crawler
 
 from franck.model.video import Video
 
-# get all videos pages in a section (eg, gaming-live, speed game, etc)
+# get all the videos found on a page
 def videos(url):
-  pages = crawler.crawl(url)
-  return pages
+  pages = parser.video_pages(url)
+  
+  return [video(url) for url in pages]
   
 # get the video config info of a single page or all sub-pages of a section
 def video(url):

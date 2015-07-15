@@ -12,19 +12,19 @@ import franck.utils.loader as io
 
 BASE_URL = 'http://www.jeuxvideo.com'
 
-# return a soup object for the given url, using a local cache
-def _get_soup(url):
-  html = io.load_page(url)
+# return a soup object for the given url, optionaly using a local cache
+def _get_soup(url, cache=False):
+  html = io.load_page(url, cache=cache)
   return BeautifulSoup(html, 'html.parser')
 
 # return the last page number in a section
 def _get_last_page_index(soup):
-  div = soup.find_all("div", class_="bloc-liste-num-page")[0]
-  
   try:
+    div = soup.find_all("div", class_="bloc-liste-num-page")[0]
+  
     return int(div.find_all("span")[-1].get_text())
   except IndexError:
-    return -1
+    return 0
   
 # returns a list of urls that span the whole section (page 1 to page max)
 def index(url):
@@ -38,7 +38,7 @@ def index(url):
     return []
   
   # load last link
-  soup = get_soup(page_url + '?p=' + str(last_page_index))
+  soup = _get_soup(page_url + '?p=' + str(last_page_index))
   last_page_index = _get_last_page_index(soup)
   
   if last_page_index == -1:
@@ -61,7 +61,7 @@ def video_pages(url):
 # returns the video config file for a video page
 def video_config(url):
   try:
-    soup = _get_soup(url)
+    soup = _get_soup(url, cache=True)
     player = soup.find("div", class_="player-jv")
     
     # get the config file url
@@ -79,7 +79,7 @@ def video_config(url):
 # returns details about the video on a video page
 def video_info(url):
   try:
-    soup = _get_soup(url)
+    soup = _get_soup(url, cache=True)
     video = soup.find("div", itemprop="video")
     
     # title: <meta itemprop="name" content="Rocket League : du foot motorisé à l&#039;essai en split-screen !" />
@@ -106,17 +106,18 @@ def video_info(url):
       'title': title,
       'thumbnail': thumbnail,
       'duration': duration,
+      'description': description,
     }
   except:
     return
     
 if __name__ == '__main__':
   if len(sys.argv) < 2:
-    #url = "http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=296"
-    url = "http://www.jeuxvideo.com/videos/gaming-live/433637/rocket-league-du-foot-motorise-a-l-essai-en-split-screen.htm"
+    url = "http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=296"
+    #url = "http://www.jeuxvideo.com/videos/gaming-live/433637/rocket-league-du-foot-motorise-a-l-essai-en-split-screen.htm"
   else:
     url = sys.argv[1]
   
-  #print(index(url))
-  print(video_config(url))
-  print(video_info(url))
+  print(index(url))
+  #print(video_config(url))
+  #print(video_info(url))
