@@ -5,7 +5,7 @@ import concurrent.futures
 
 import franck.utils.parser as parser
 
-# returns all the videos found on all pages of one section
+# returns all the video url found on all pages of one section
 # can be run from any page of the section (eg. page 300 of 310)
 def crawl(url):
   # get an index of all the pages in the section
