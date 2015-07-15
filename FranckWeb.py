@@ -13,6 +13,27 @@ cors = CORS(app)
 #@app.errorhandler(Exception)
 #def handle_invalid_usage(error):
 #    return jsonify({'exception': "exception"}), 400
+'''
+@app.route("/videos", methods=['GET'])
+def videos():
+    # get args
+    if not request.form or request.form.get('url') is None:
+        abort(400)
+    command = request.form.get('url')
+    
+    # parse args and load
+    if command.startswith('http://'):
+        videos = video.from_urls(get_video_urls(command))
+    elif command.startswith("random") or command.startswith("r"):
+        videos = video.from_configs(get_random_config(command.split(" ")[-1]))
+    else:
+        videos = []
+
+    # return a nice result
+    pretty = [v.pretty() for v in videos]
+    
+    return jsonify({'videos': pretty}), 200
+'''
 
 @app.route("/videos/<path:url>", methods=['GET'])
 # curl http://localhost:5000/videos/http://www.jeuxvideo.com/toutes-les-videos/type-7340/machine-40/genre-2050/

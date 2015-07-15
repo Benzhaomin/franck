@@ -4,7 +4,10 @@ $(document).ready(function() {
         
         $("#results").html('');
         
-        $.post("http://localhost:5000/", { url: $('input[name="url"]').val() }, function(data, status) {
+        var url = $('input[name="url"]').val();
+        url = encodeURIComponent(url);
+        
+        $.get("http://localhost:5000/videos/"+url, function(data, status) {
             //console.log(data);
         })
         .done(function(data) {

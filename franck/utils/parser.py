@@ -3,6 +3,7 @@
 
 import sys
 import json
+import re
 import hashlib
 import concurrent.futures
 
@@ -51,9 +52,14 @@ def index(url):
 def video_pages(url):
   try:
     soup = _get_soup(url)
-    titles = soup.find_all("h2", class_="titre-item")
-    links = [h2.find_all("a")[0] for h2 in titles]
-
+    
+    # articles often contain videos
+    articles = soup.find_all("article")
+    
+    # list all links found in articles
+    links = [article.find("a") for article in articles]
+    
+    # return a list of absolute URLs from that list
     return [BASE_URL + link.get('href') for link in links]
   except:
     return
@@ -118,6 +124,7 @@ if __name__ == '__main__':
   else:
     url = sys.argv[1]
   
-  print(index(url))
+  #print(index(url))
+  print(video_pages(url))
   #print(video_config(url))
   #print(video_info(url))
