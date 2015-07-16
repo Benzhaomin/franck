@@ -3,28 +3,26 @@
 <head>
     <link href="css/lib/normalize.min.css" rel="stylesheet" type="text/css" />
     <link href="css/franck.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="img/favicon.png" type="images/png">
     <title>Franck Video Browser</title>
 </head>
 <body>
     
     <nav class="main">
-        <ul class="clearfix">
-            <li>
-                <a class="preset" href="http://www.jeuxvideo.com/gaming_live.htm">Gaming Live</a>
-            </li>
-            <li>
-                <a class="preset" href="http://www.jeuxvideo.com/chroniques-video-speed-game.htm">Speed Game</a>
-            </li>
-            <li>
-                <a class="preset" href="r 12">Random</a>
-            </li>
-            <li>
-                <form method="post" action="#">
-                    <input type="search" name="url" id="url" placeholder="url or command">
-                    <input type="submit" style="display:none" />
-                </form>
-            </li>
-        </ul>
+        <form method="post" action="#">
+            <input type="search" name="url" id="url" placeholder="url">
+            <ul class="commands">
+                <li>
+                    <input type="submit" value="Go" />
+                </li>
+                <li>
+                    <a class="preset" href="http://www.jeuxvideo.com/gaming_live.htm">Gaming Live</a>
+                </li>
+                <li>
+                    <a class="preset" href="http://www.jeuxvideo.com/chroniques-video-speed-game.htm">Speed Game</a>
+                </li>
+            </ul>
+        </form>
     </nav>
     
     <section id="results"></section>
@@ -51,7 +49,7 @@
                         </li>
                     </ul>
                     
-                    <div class="timeline" data-binding="timeline" data-index="0" style="background-image:url({{timeline}});"></div>
+                    <div class="timeline" data-binding="timeline" data-mode="stopped" data-index="0" data-timeline="{{timeline}}"></div>
                 </section>
             </div>
         </article>

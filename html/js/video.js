@@ -22,8 +22,6 @@ Video.prototype.render = function() {
     article = article.replaceAll('{{config}}', this.config);
     article = article.replaceAll('{{timeline}}', this.timeline);
     
-    $(document).find('[data-binding="timeline"]').css('background-image', 'url('+this.timeline+')');
-    
     $.each(["1080p", "720p", "400p", "272p"], function(index, value) {
         // try to get the video in a given format
         var item = self.sources[value];

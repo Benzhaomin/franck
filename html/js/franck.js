@@ -2,7 +2,7 @@ $(document).ready(function() {
     $('form').submit(function(e) {
         e.preventDefault();
         
-        $("#results").html('');
+        $("#results").html('<img class="loading" src="img/loading.svg"/>');
         
         var url = $('input[name="url"]').val();
         url = encodeURIComponent(url);
@@ -11,16 +11,19 @@ $(document).ready(function() {
             //console.log(data);
         })
         .done(function(data) {
+            $("#results").html('');
+            
             data.videos.sort(function(a, b) {
                 return parseInt(a.id) < parseInt(b.id);
             });
+            
             $.each(data.videos, function(index, config) {
                 var v = new Video(config);
                 $("#results").append(v.render());
             });
         })
         .fail(function() {
-            alert("failed");
+            $("#results").html('<h2 class="error">Request failed</h2>');
         })
         .always(function() {
             $(window).resize();
