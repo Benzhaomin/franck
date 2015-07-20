@@ -49,73 +49,78 @@ def index(url):
   return [page_url + '?p=' + str(i) for i in range(1, int(last_page_index) + 1)]
 
 # returns a list of url of all the video pages on a page
+# TODO: unit test
 def video_pages(url):
-  try:
-    soup = _get_soup(url)
-    
-    # articles often contain videos
-    articles = soup.find_all("article")
-    
-    # list all links found in articles
-    links = [article.find("a") for article in articles]
-    
-    # return a list of absolute URLs from that list
-    return [BASE_URL + link.get('href') for link in links]
-  except:
-    return
+  soup = _get_soup(url)
+  
+  # articles often contain videos
+  articles = soup.find_all("article")
+  
+  if not player:
+    return []
+  
+  # list all links found in articles
+  links = [article.find("a") for article in articles]
+  
+  # return a list of absolute URLs from that list
+  return [BASE_URL + link.get('href') for link in links]
 
 # returns the video config file for a video page
+# TODO: unit test
 def video_config(url):
-  try:
-    soup = _get_soup(url, cache=True)
-    player = soup.find("div", class_="player-jv")
-    
-    # get the config file url
-    config_url = BASE_URL + player.get('data-src')
-    config_id = hashlib.md5(url.encode()).hexdigest() + ".json"
-    
-    # load and cache the config file
-    json_config = io.load_page(config_url, filename=config_id)
+  soup = _get_soup(url, cache=True)
+  player = soup.find("div", class_="player-jv")
+  
+  if not player:
+    return None
+  
+  # get the config file url
+  config_url = BASE_URL + player.get('data-src')
+  config_id = hashlib.md5(url.encode()).hexdigest() + ".json"
+  
+  # load and cache the config file
+  json_config = io.load_page(config_url, filename=config_id)
 
-    # turn the json string into a json dict
-    return json.loads(json_config)
-  except:
-    return
+  # turn the json string into a json dict
+  return json.loads(json_config)
+
 
 # returns details about the video on a video page
+# TODO: unit test
 def video_info(url):
-  try:
-    soup = _get_soup(url, cache=True)
-    video = soup.find("div", itemprop="video")
-    
-    # title: <meta itemprop="name" content="Rocket League : du foot motorisé à l&#039;essai en split-screen !" />
-    title = video.find("meta", itemprop="name").get("content")
-    
-    # thumbnail: <meta itemprop="thumbnail" content="http://image.jeuxvideo.com/images/videos/....jpg" />
-    thumbnail = video.find("meta", itemprop="thumbnail").get("content")
-    thumbnail = thumbnail.replace('low.jpg', 'high.jpg')
-    
-    # duration: <meta itemprop="duration" content="PT0H10M37S" />
-    duration = video.find("meta", itemprop="duration").get("content")
-    
-    # <div class="date-comm"> </div>
-    #date-comm = video.find("div", itemprop="date-comm")
-    
-    # datetime: <time datetime="2015-07-09T20:38">09/07/2015 à 20:38</time>
-    
-    # views: <span>17440 vues</span>
-    
-    # description (HTML): <div class="corps-video text-enrichi-default">...</div>
-    description = video.find("div", class_="corps-video").text
-    
-    return {
-      'title': title,
-      'thumbnail': thumbnail,
-      'duration': duration,
-      'description': description,
-    }
-  except:
-    return
+  soup = _get_soup(url, cache=True)
+  video = soup.find("div", itemprop="video")
+  
+  if not video:
+    return None
+  
+  # title: <meta itemprop="name" content="Rocket League : du foot motorisé à l&#039;essai en split-screen !" />
+  title = video.find("meta", itemprop="name").get("content")
+  
+  # thumbnail: <meta itemprop="thumbnail" content="http://image.jeuxvideo.com/images/videos/....jpg" />
+  thumbnail = video.find("meta", itemprop="thumbnail").get("content")
+  thumbnail = thumbnail.replace('low.jpg', 'high.jpg')
+  
+  # duration: <meta itemprop="duration" content="PT0H10M37S" />
+  duration = video.find("meta", itemprop="duration").get("content")
+  
+  # <div class="date-comm"> </div>
+  #date-comm = video.find("div", itemprop="date-comm")
+  
+  # datetime: <time datetime="2015-07-09T20:38">09/07/2015 à 20:38</time>
+  
+  # views: <span>17440 vues</span>
+  
+  # description (HTML): <div class="corps-video text-enrichi-default">...</div>
+  description = video.find("div", class_="corps-video").text
+  
+  return {
+    'title': title,
+    'thumbnail': thumbnail,
+    'duration': duration,
+    'description': description,
+  }
+
     
 if __name__ == '__main__':
   if len(sys.argv) < 2:
