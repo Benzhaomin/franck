@@ -10,14 +10,14 @@ import string
 import html
   
 CACHEDIR = 'cache'
-
-
-# fake user-agent
+ 
+# custom user-agent
 class AppURLopener(urllib.request.FancyURLopener):
   version = "Franck Video Downloader - 0.2"
 
 urllib._urlopener = AppURLopener()
 
+# TODO: check that we never load any page outside of jeuxvideo.com/
 def read_page(url):
   try:
     url = urllib.parse.unquote(url)
