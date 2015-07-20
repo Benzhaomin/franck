@@ -25,8 +25,8 @@ def read_page(url):
     #print("loading " + url)
     return urllib.request.urlopen(url).read()
   except urllib.error.HTTPError as e:
-    print("failed loading "+ url + " " + str(e.reason) + " " + str(e.code))
-    return bin(e.code)
+    print(str(e.code) + " error: read_page failed on '"+ url + "' " + str(e.reason))
+    return b""
   except IOError:
     print("failed loading "+ url)
     raise
