@@ -26,6 +26,18 @@ def _get_last_page_index(soup):
     return int(div.find_all("span")[-1].get_text())
   except IndexError:
     return 0
+
+# returns an absolute url if it's relative
+# TODO: unit test
+def _get_absolute_url(url):
+  if not url.startswith('http'):
+    return BASE_URL + url
+  return url
+
+# returns the config filename corresponding to a URL
+# TODO: unit test
+def _get_config_filename(url):
+  return hashlib.md5(url.encode()).hexdigest() + ".json"
   
 # returns a list of urls that span the whole section (page 1 to page max)
 def index(url):
@@ -55,18 +67,17 @@ def video_pages(url):
   # articles often contain videos
   articles = soup.find_all("article")
   
-  if not player:
+  if not articles:
     return []
   
   # list all links found in articles
   links = [article.find("a") for article in articles]
   
   # return a list of absolute URLs from that list
-  return [BASE_URL + link.get('href') for link in links]
+  return [_get_absolute_url(link.get('href')) for link in links]
 
-# returns the video config file for a video page
-# TODO: unit test
-def video_config(url):
+# returns the video config file URL from a video page
+def video_config_url(url):
   soup = _get_soup(url, cache=True)
   player = soup.find("div", class_="player-jv")
   
@@ -74,11 +85,21 @@ def video_config(url):
     return None
   
   # get the config file url
-  config_url = BASE_URL + player.get('data-src')
-  config_id = hashlib.md5(url.encode()).hexdigest() + ".json"
+  return _get_absolute_url(player.get('data-src'))
+  
+# returns the video json config for a video page
+# TODO: unit test
+def video_config(url):
+  # get the config file url
+  config_url = video_config_url(url)
+  
+  if not config_url:
+    return None
+  
+  config_file = _get_config_filename(url)
   
   # load and cache the config file
-  json_config = io.load_page(config_url, filename=config_id)
+  json_config = io.load_page(config_url, filename=config_file)
 
   # turn the json string into a json dict
   return json.loads(json_config)
@@ -129,6 +150,7 @@ if __name__ == '__main__':
     url = sys.argv[1]
   
   #print(index(url))
-  print(video_pages(url))
+  #print(video_pages(url))
+  print(video_config_url(url))
   #print(video_config(url))
   #print(video_info(url))
