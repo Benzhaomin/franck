@@ -49,7 +49,6 @@ def index(url):
   return [page_url + '?p=' + str(i) for i in range(1, int(last_page_index) + 1)]
 
 # returns a list of url of all the video pages on a page
-# TODO: unit test
 def video_pages(url):
   soup = _get_soup(url)
   
