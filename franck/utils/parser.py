@@ -60,6 +60,21 @@ def index(url):
   # return a sorted list of absolute urls for all the pages in the section
   return [page_url + '?p=' + str(i) for i in range(1, int(last_page_index) + 1)]
 
+# returns the a tag pointing to a video page if any
+# TODO: unit test
+def _get_video_link(article):
+  # try with the standard format (href="/videos/*)
+  link = article.find(href=re.compile("^/videos/"))
+  
+  if not link:
+    # custom format links (specific to a section)
+    title = article.find("h2", class_="titre-item")
+
+    if title:
+      link = title.a
+  
+  return link
+  
 # returns a list of url of all the video pages on a page
 def video_pages(url):
   soup = _get_soup(url)
@@ -71,7 +86,10 @@ def video_pages(url):
     return []
   
   # list all links found in articles
-  links = [article.find("a") for article in articles]
+  links = [_get_video_link(article) for article in articles]
+  
+  # remove dead entries (articles without valid link)
+  links = filter(None, links)
   
   # return a list of absolute URLs from that list
   return [_get_absolute_url(link.get('href')) for link in links]
