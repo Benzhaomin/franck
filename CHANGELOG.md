@@ -1,8 +1,9 @@
-Franck 0.3.0 (July xth 2015)
+Franck 0.3.0 (July 20th 2015)
 
   * Switch to git
+  * Support for the new design
+  * Added a parser, uses BeautifulSoup, no more parsing inside model/
   * Added a crawler
-  * Added a parser, uses BeautifulSoup
   
 Franck 0.2.0 (October 18th 2014)
 
