@@ -145,6 +145,7 @@ body {
 #player {
     width: 100%;
     display: none;
+    background: black;
 }
 #player > video {
     width: 100%;

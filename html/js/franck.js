@@ -2,6 +2,7 @@ $(document).ready(function() {
     $('form').submit(function(e) {
         e.preventDefault();
         
+        stopVideo();
         $("#results").html('<img class="loading" src="img/loading.svg"/>');
         
         var url = $('input[name="url"]').val();
@@ -30,7 +31,6 @@ $(document).ready(function() {
         .always(function() {
             bLazy.revalidate();
             $(window).resize();
-            $("#player").hide();
         });
     });
     
@@ -46,11 +46,19 @@ $(document).ready(function() {
         e.preventDefault();
         e.stopPropagation();
         
-        $("#player > video").attr("src", $(this).attr("href")).get(0).play();
-        $("#player").show();
-        $("html, body").animate({ scrollTop: 0 }, "slow");
+        playVideo($(this).attr("href"));
     });
     
+    function playVideo(src) {
+        $("#player > video").attr("src", src).get(0).play();
+        $("#player").show();
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+    }
+    
+    function stopVideo() {
+        $("#player > video").attr("src", '');
+        $("#player").hide();
+    }
     var bLazy = new Blazy({
         offset: 200,
         success: function(element){
