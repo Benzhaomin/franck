@@ -41,6 +41,14 @@ $(document).ready(function() {
         $('form').submit();
     });
     
+    /*
+    $("ul.sources > li > a").off("click").on("click", function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        $article = $(this).parent("article");
+    });*/
+    
     var bLazy = new Blazy({
         offset: 200,
         success: function(element){

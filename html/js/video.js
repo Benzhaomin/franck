@@ -34,7 +34,11 @@ Video.prototype.render = function() {
         }
     });
     
-    return $(article);
+    $article = $(article);
+    
+    $article.find('ul.sources > li a[href*="http"]').slice(0,1).addClass('quality-best');
+    
+    return $article;
 };
 
 String.prototype.replaceAll = function (find, replace) {
