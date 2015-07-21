@@ -1,6 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
+import argparse
+import logging
+
+logger = logging.getLogger('franck.logger')
+
 from flask import Flask, jsonify, request, abort
 from flask_cors import CORS
 
@@ -54,6 +60,19 @@ def video(url):
     video_info = api.video(url)
     
     return jsonify(video_info), 200
-
+    
 if __name__ == "__main__":
-    app.run(debug=True)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--log', dest='loglevel', default='WARNING')
+    args = parser.parse_args()
+    
+    # set logger level
+    numeric_level = getattr(logging, args.loglevel.upper(), None)
+    if not isinstance(numeric_level, int):
+        raise ValueError('Invalid log level: %s' % loglevel)
+    
+    logging.basicConfig(level=numeric_level, format='%(asctime)s %(message)s')
+    
+    # gogogo
+    app.run() #debug=args.verbose
+    
