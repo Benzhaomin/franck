@@ -21,13 +21,15 @@ $(document).ready(function() {
                 var v = new Video(config);
                 $("#results").append(v.render());
             });
+            
+            $("#results").find("article:first-child").addClass("size-big");
         })
         .fail(function() {
             $("#results").html('<h2 class="error">Request failed</h2>');
         })
         .always(function() {
-            $(window).resize();
             bLazy.revalidate();
+            $(window).resize();
         });
     });
     
