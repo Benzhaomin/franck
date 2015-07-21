@@ -5,8 +5,8 @@
   - 
   
 * Normal
-  - front-end rewrite to use masonry (with varying block size, 1st result bigger, playing video bigger etc)
-  - front-end <video> embed and zoom on click
+  - rewrite loader.py
+  - add proper logging support (debug mode, normal mode)
   - cleanly split the project into api, website, ff extension, cli utils
   - add more unit testing (crawler/bootstrap)
   - arch package

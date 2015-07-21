@@ -1,3 +1,8 @@
+Franck 0.4.0 (July xth 2015)
+  * [API] Added a test suite for the parser
+  * [Front-end] Pure CSS responsive grid
+  * [Front-end] Display videos inline in a <video> tag
+  
 Franck 0.3.0 (July 20th 2015)
 
   * Switch to git
