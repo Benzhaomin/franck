@@ -30,6 +30,7 @@ $(document).ready(function() {
         .always(function() {
             bLazy.revalidate();
             $(window).resize();
+            $("#player").hide();
         });
     });
     
@@ -41,13 +42,14 @@ $(document).ready(function() {
         $('form').submit();
     });
     
-    /*
-    $("ul.sources > li > a").off("click").on("click", function(e) {
+    $("#results").off("click").on("click", "ul.sources > li > a", function(e) {
         e.preventDefault();
         e.stopPropagation();
         
-        $article = $(this).parent("article");
-    });*/
+        $("#player > video").attr("src", $(this).attr("href")).get(0).play();
+        $("#player").show();
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+    });
     
     var bLazy = new Blazy({
         offset: 200,

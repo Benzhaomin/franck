@@ -141,6 +141,16 @@ body {
     }
 }
 
+/* video player */
+#player {
+    width: 100%;
+    display: none;
+}
+#player > video {
+    width: 100%;
+    height: auto;
+}
+
 /* results */
 #results {
     text-align: center;
