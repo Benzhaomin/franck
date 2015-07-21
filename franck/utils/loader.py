@@ -6,11 +6,17 @@ import requests
 
 import franck.utils.cache as cache
 
-# TODO: check that we never load any page outside of jeuxvideo.com/
+USER_AGENT = 'Franck/0.4.0'
+
+# returns the content found at a remote url
 def _read_page(url):
   try:
-    print("[loader] loading " + url)
-    headers = {'user-agent': 'Franck/0.4.0'}
+    # never ever load something outside of our domain
+    if not url.startswith(utils.BASE_URL):
+      return ""
+      
+    #print("[loader] loading " + url)
+    headers = {'user-agent': USER_AGENT}
     r = requests.get(url)
     r.raise_for_status()
     return r.text
@@ -18,6 +24,7 @@ def _read_page(url):
     print("[loader] " + str(e) + " error: read_page failed on '"+ url)
     return ""
 
+# returns the content of a remote url, using a local cache
 def load_page(url):
   try:
     return cache.read(url)
@@ -32,7 +39,7 @@ if __name__ == '__main__':
   else:
     url = sys.argv[1]
 
-  #print(len(load_page(url, cache=False)))
-  print(len(load_page(url, cache=True)))
-  #print(load_page(url, cache=False))
-  #print(load_page(url, cache=True))
+  #print(len(_read_page(url)))
+  #print(len(load_page(url)))
+  #print(_read_page(url))
+  #print(load_page(url))

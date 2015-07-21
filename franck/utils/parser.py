@@ -167,7 +167,7 @@ if __name__ == '__main__':
     url = sys.argv[1]
   
   #print(index(url))
-  print(video_pages(url))
-  #print(video_config_url(url))
-  #print(video_config(url))
-  #print(video_info(url))
+  #print(video_pages(url))
+  print(video_config_url(url))
+  print(video_config(url))
+  print(video_info(url))
