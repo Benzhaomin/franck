@@ -21,7 +21,7 @@ class TestParserGetConfigFilename(unittest.TestCase):
 
 # load a remote html file from a local copy and return it as a Soup object
 def _get_local_soup(filename):
-  with open(os.path.join(os.path.dirname(__file__), filename)) as htmlfile:
+  with open(os.path.join(os.path.dirname(__file__), 'files', filename)) as htmlfile:
     html = htmlfile.read()
     return BeautifulSoup(html, 'html.parser')
   
