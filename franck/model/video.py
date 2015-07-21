@@ -1,6 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import logging
+
+logger = logging.getLogger('franck.logger')
+
 import franck.parser as parser
 
 class Video:
@@ -20,6 +24,7 @@ class Video:
   
   def beautify(self, config, info):
     if not config or not info:
+      logger.warning("[video] video data not found at %s", self.url)
       return {}
     
     video_id = config["tracks"][0]["file"].split("=")[-1]
