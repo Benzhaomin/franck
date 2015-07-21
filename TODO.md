@@ -2,7 +2,7 @@
   - 
   
 * High
-  - add unit testing to the parser
+  - 
   
 * Normal
   - front-end rewrite to use masonry (with varying block size, 1st result bigger, playing video bigger etc)

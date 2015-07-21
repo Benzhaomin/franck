@@ -18,15 +18,6 @@ def _get_soup(url, cache=False):
   html = io.load_page(url, cache=cache)
   return BeautifulSoup(html, 'html.parser')
 
-# return the last page number in a section
-def _get_last_page_index(soup):
-  try:
-    div = soup.find_all("div", class_="bloc-liste-num-page")[0]
-  
-    return int(div.find_all("span")[-1].get_text())
-  except IndexError:
-    return 0
-
 # returns an absolute url if it's relative
 def _get_absolute_url(url):
   if not url.startswith('http'):
@@ -37,7 +28,18 @@ def _get_absolute_url(url):
 def _get_config_filename(url):
   return hashlib.md5(url.encode()).hexdigest() + ".json"
   
+# return the last page number in a section
+# TODO: unit test
+def _get_last_page_index(soup):
+  try:
+    div = soup.find_all("div", class_="bloc-liste-num-page")[0]
+  
+    return int(div.find_all("span")[-1].get_text())
+  except IndexError:
+    return 0
+
 # returns a list of urls that span the whole section (page 1 to page max)
+# TODO: unit test
 def index(url):
   soup = _get_soup(url)
   page_url = url.split('?')[0]
