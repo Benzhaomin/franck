@@ -122,7 +122,6 @@ def video_config(url):
 
 
 # returns details about the video on a video page
-# TODO: unit test
 def video_info(url):
   soup = _get_soup(url, cache=True)
   video = soup.find("div", itemprop="video")
@@ -167,6 +166,6 @@ if __name__ == '__main__':
   
   #print(index(url))
   #print(video_pages(url))
-  print(video_config_url(url))
+  #print(video_config_url(url))
   #print(video_config(url))
-  #print(video_info(url))
+  print(video_info(url))

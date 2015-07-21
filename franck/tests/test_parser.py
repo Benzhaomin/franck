@@ -118,9 +118,27 @@ class TestParserVideoConfigUrl(unittest.TestCase):
 class TestParserVideoConfig(unittest.TestCase):
   pass
 
-# TODO: check that we can parse video info from a video page
 class TestParserVideoInfo(unittest.TestCase):
-  pass
+  # check that we correctly parse data on a video page
+  @patch('franck.utils.parser._get_soup', side_effect=get_soup_video_page)
+  def test_video_info(self, get_soup_video_page):
+    expected = {'title': 'Kingdom Hearts : Chain of Memories : Sora', 'thumbnail': 'http://image.jeuxvideo.com/images/videos/gaming_live_images/200705/kingdom_hearts_gba-00000849-high.jpg', 'description': "\nRetour sur Chain of Memories, afin de vous remettre les idées au clair concernant cet épisode qui n'est plus vaiment une exclusivité GBA puisque le remake est proposé dans Kingdom Hearts 2 Final Mix+ au Japon. Une bonne occasion de revoir le fonctionnement de ce titre qui se démarque par son système de cartes.\n", 'duration': 'PT0H8M5S'}
+    actual = video_info('')
+    self.assertEqual(actual, expected)
+    
+  # check that we get None on unexisting pages
+  @patch('franck.utils.parser._get_soup', side_effect=get_soup_404)
+  def test_video_config_404(self, get_soup_404):   
+    expected = None
+    actual = video_info('')
+    self.assertEqual(actual, expected)
+    
+  # check that we get None on pages without config
+  @patch('franck.utils.parser._get_soup', side_effect=get_soup_no_video)
+  def test_video_config_url_no_video(self, get_soup_no_video):   
+    expected = None
+    actual = video_info('')
+    self.assertEqual(actual, expected)
 
 if __name__ == '__main__':
   unittest.main()
