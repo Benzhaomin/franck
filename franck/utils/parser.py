@@ -28,14 +28,12 @@ def _get_last_page_index(soup):
     return 0
 
 # returns an absolute url if it's relative
-# TODO: unit test
 def _get_absolute_url(url):
   if not url.startswith('http'):
     return BASE_URL + url
   return url
 
 # returns the config filename corresponding to a URL
-# TODO: unit test
 def _get_config_filename(url):
   return hashlib.md5(url.encode()).hexdigest() + ".json"
   
