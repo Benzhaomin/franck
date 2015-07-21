@@ -1,36 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from franck.utils.parser import _get_absolute_url
-from franck.utils.parser import _get_config_filename
-from franck.utils.parser import video_pages
-from franck.utils.parser import video_config_url
-from franck.utils.parser import video_config
-from franck.utils.parser import video_info
-from bs4 import BeautifulSoup
-
 import os
 import json
 import unittest
 from unittest.mock import patch
-
-class TestParserGetAbsoluteUrl(unittest.TestCase):
-  def test_get_absolute_url_relative(self):
-    expected = 'http://www.jeuxvideo.com/videos/chroniques/434958/speed-game-live-any-majora-s-mask-fini-en-moins-de-1h35.htm'
-    actual = _get_absolute_url('/videos/chroniques/434958/speed-game-live-any-majora-s-mask-fini-en-moins-de-1h35.htm')
-    self.assertEqual(actual, expected)
     
-  def test_get_absolute_url_absolute(self):
-    expected = 'http://www.jeuxvideo.com/videos/chroniques/434958/speed-game-live-any-majora-s-mask-fini-en-moins-de-1h35.htm'
-    actual = _get_absolute_url('http://www.jeuxvideo.com/videos/chroniques/434958/speed-game-live-any-majora-s-mask-fini-en-moins-de-1h35.htm')
-    self.assertEqual(actual, expected)
+from bs4 import BeautifulSoup
 
-class TestParserGetConfigFilename(unittest.TestCase):
-  def test_get_config_filename(self):
-    expected = '34228802351da75aff19169dcdf83c42.json'
-    actual = _get_config_filename('http://www.jeuxvideo.com/gaming-live/0001/00011717/kingdom-hearts-chain-of-memories-gameboy-advance-gba-sora-00000849.htm')
-    self.assertEqual(actual, expected)
-    
+from franck.utils.parser import video_pages
+from franck.utils.parser import video_config_url
+from franck.utils.parser import video_config
+from franck.utils.parser import video_info
+
 # load a remote html file from a local copy and return it as a Soup object
 def _get_local_soup(filename):
   with open(os.path.join(os.path.dirname(__file__), 'files', filename)) as htmlfile:
