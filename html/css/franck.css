@@ -201,10 +201,6 @@ article:hover .background {
 article h2 {
     padding: 15px;
     font-variant: small-caps;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
     display: none;
 }
 article h2 a {
@@ -236,7 +232,7 @@ a[href="#"] {
 /* timeline */
 .timeline {
     position: absolute;
-    top: 20px;
+    bottom: 20px;
     right: 20px;
     background: url("../img/play.png") no-repeat center center #151515;
     width: 108px;
