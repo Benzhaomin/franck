@@ -33,6 +33,10 @@ h1, h2, h3, h4, h5, h6, ul {
     margin: 0;
     padding: 0;
 }
+li, p {
+    margin: 0;
+    padding: 0;
+}
 a {
     text-decoration: none;
     color: inherit;
@@ -237,12 +241,18 @@ a[href="#"] {
     background: url("../img/play.png") no-repeat center center #151515;
     width: 108px;
     height: 60px;
-    color: black;
     cursor: pointer;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.1);
 }
 .timeline:hover {
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+.timeline p {
+    position: absolute;
+    bottom: 1px;
+    right: 3px;
+    font-size: 10px;
+    color: #555;
 }
 
 /* sources */
