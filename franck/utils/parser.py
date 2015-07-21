@@ -15,7 +15,7 @@ BASE_URL = 'http://www.jeuxvideo.com'
 
 # return a soup object for the given url, optionaly using a local cache
 def _get_soup(url, cache=False):
-  html = io.load_page(url, cache=cache)
+  html = io.load_page(url)
   return BeautifulSoup(html, 'html.parser')
 
 # returns an absolute url if it's relative
@@ -117,7 +117,7 @@ def video_config(url):
   config_file = _get_config_filename(url)
   
   # load and cache the config file
-  json_config = io.load_page(config_url, filename=config_file)
+  json_config = io.load_page(config_url)
 
   # turn the json string into a json dict
   return json.loads(json_config)
@@ -167,7 +167,7 @@ if __name__ == '__main__':
     url = sys.argv[1]
   
   #print(index(url))
-  #print(video_pages(url))
+  print(video_pages(url))
   #print(video_config_url(url))
   #print(video_config(url))
-  print(video_info(url))
+  #print(video_info(url))
