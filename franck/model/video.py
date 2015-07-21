@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import franck.utils.parser as parser
+import franck.parser as parser
 
 class Video:
   

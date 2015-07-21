@@ -7,8 +7,8 @@ import logging
 
 logger = logging.getLogger('franck.logger')
 
-import franck.utils.cache as cache
-import franck.utils.utils as utils
+import franck.io.cache as cache
+import franck.utils as utils
 
 USER_AGENT = 'Franck/0.4.0'
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from franck.utils.utils import get_absolute_url
-from franck.utils.utils import get_relative_url
+from franck.utils import get_absolute_url
+from franck.utils import get_relative_url
 
 import unittest
 

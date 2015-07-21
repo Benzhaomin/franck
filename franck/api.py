@@ -5,8 +5,8 @@ import logging
 
 logger = logging.getLogger('franck.logger')
 
-import franck.utils.parser as parser
-import franck.utils.crawler as crawler
+import franck.parser as parser
+import franck.crawler as crawler
 
 from franck.model.video import Video
 

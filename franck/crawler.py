@@ -4,7 +4,7 @@
 import sys
 import concurrent.futures
 
-import franck.utils.parser as parser
+import franck.parser as parser
 
 # returns all the video page url found in a whole section
 def crawl(url):

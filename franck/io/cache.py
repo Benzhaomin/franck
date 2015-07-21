@@ -10,7 +10,7 @@ import logging
 
 logger = logging.getLogger('franck.logger')
 
-import franck.utils.utils as utils
+import franck.utils as utils
 
 CACHEDIR = appdirs.user_cache_dir('Franck', 'Wainei')
 

@@ -12,8 +12,8 @@ logger = logging.getLogger('franck.logger')
 
 from bs4 import BeautifulSoup
 
-import franck.utils.loader as loader
-import franck.utils.utils as utils
+import franck.io.loader as loader
+import franck.utils as utils
 
 # return a soup object for the given url, optionaly using a local cache
 def _get_soup(url, cache=False):
