@@ -6,6 +6,9 @@ import json
 import re
 import hashlib
 import concurrent.futures
+import logging
+
+logger = logging.getLogger('franck.logger')
 
 from bs4 import BeautifulSoup
 
@@ -147,6 +150,8 @@ def video_info(url):
 
     
 if __name__ == '__main__':
+  logging.basicConfig(level=logging.DEBUG)
+  
   if len(sys.argv) < 2:
     url = "http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=296"
     #url = "http://www.jeuxvideo.com/videos/gaming-live/433637/rocket-league-du-foot-motorise-a-l-essai-en-split-screen.htm"
@@ -154,7 +159,7 @@ if __name__ == '__main__':
     url = sys.argv[1]
   
   #print(index(url))
-  #print(video_pages(url))
-  print(video_config_url(url))
-  print(video_config(url))
-  print(video_info(url))
+  print(video_pages(url))
+  #print(video_config_url(url))
+  #print(video_config(url))
+  #print(video_info(url))

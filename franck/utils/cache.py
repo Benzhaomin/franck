@@ -6,6 +6,9 @@ import string
 import datetime
 import appdirs
 import urllib.parse
+import logging
+
+logger = logging.getLogger('franck.logger')
 
 import franck.utils.utils as utils
 
@@ -30,15 +33,15 @@ def _invalidate(filename, expiry):
   path = os.path.join(CACHEDIR, filename)
   
   if os.path.exists(path):
-    #print("[cache] invalidate?: "+str(expiry)+" "+filename)
+    logger.debug("[cache] invalidate?: %s, expiring after %s", filename, expiry)
     modification_time = datetime.datetime.fromtimestamp(os.path.getmtime(path))
     expiry_time = modification_time + expiry
     
     if expiry_time < datetime.datetime.now():
       os.remove(path)
-    #  print("[cache] purged: "+filename+str(expiry_time)+'>'+str(datetime.datetime.now()))
-    #else:
-    #  print("[cache] not too old: "+filename+str(expiry_time)+'<'+str(datetime.datetime.now()))
+      logger.debug("[cache] purged: %s because %s > %s", path, expiry_time, datetime.datetime.now())
+    else:
+      logger.debug("[cache] didn't purge: %s because %s < %s", filename, expiry_time, datetime.datetime.now())
   
 # invalidates the cache when necessary
 def _refresh(filename):
@@ -65,15 +68,15 @@ def read(uri):
   if os.path.exists(path):
     _refresh(filename)
   
-  #print("[cache] read: "+filename)
+  logger.debug("[cache] read: %s", filename)
   return open(path).read()
 
 def write(uri, content):
   filename = _url_to_filename(uri)
-  #print("[cache] write: "+filename)
+  logger.debug("[cache] write: %s", filename)
   path = os.path.join(CACHEDIR, filename)
   
   with open(path, "w+") as cache:
-    #print("[cache] will cache: " + str(len(content)))
+    logger.debug("[cache] will cache: %s characters", len(content))
     cache.write(content)
 

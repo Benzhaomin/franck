@@ -3,8 +3,12 @@
 
 import sys
 import requests
+import logging
+
+logger = logging.getLogger('franck.logger')
 
 import franck.utils.cache as cache
+import franck.utils.utils as utils
 
 USER_AGENT = 'Franck/0.4.0'
 
@@ -13,15 +17,17 @@ def _read_page(url):
   try:
     # never ever load something outside of our domain
     if not url.startswith(utils.BASE_URL):
+      logger.warning("[loader] tried to load out of domain url %s", url)
       return ""
       
-    #print("[loader] loading " + url)
+    logger.debug("[loader] loading: %s", url)
+    
     headers = {'user-agent': USER_AGENT}
     r = requests.get(url)
     r.raise_for_status()
     return r.text
   except requests.exceptions.HTTPError as e:
-    print("[loader] " + str(e) + " error: read_page failed on '"+ url)
+    logger.warning("[loader] %s error: read_page failed on %s", e, url)
     return ""
 
 # returns the content of a remote url, using a local cache
@@ -34,12 +40,14 @@ def load_page(url):
     return html
 
 if __name__ == '__main__':
+  logging.basicConfig(level=logging.DEBUG)
+  
   if len(sys.argv) < 2:
     url = "http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=296"
   else:
     url = sys.argv[1]
 
-  #print(len(_read_page(url)))
+  print(len(_read_page(url)))
   #print(len(load_page(url)))
   #print(_read_page(url))
   #print(load_page(url))

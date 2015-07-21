@@ -5,7 +5,6 @@
   - 
   
 * Normal
-  - add proper logging support (debug mode, normal mode)
   - cleanly split the project into api, website, ff extension, cli utils
   - add more unit testing (crawler/bootstrap)
   - arch package
