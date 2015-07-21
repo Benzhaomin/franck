@@ -9,25 +9,14 @@ import concurrent.futures
 
 from bs4 import BeautifulSoup
 
-import franck.utils.loader as io
-
-BASE_URL = 'http://www.jeuxvideo.com'
+import franck.utils.loader as loader
+import franck.utils.utils as utils
 
 # return a soup object for the given url, optionaly using a local cache
 def _get_soup(url, cache=False):
-  html = io.load_page(url)
+  html = loader.load_page(url)
   return BeautifulSoup(html, 'html.parser')
 
-# returns an absolute url if it's relative
-def _get_absolute_url(url):
-  if not url.startswith('http'):
-    return BASE_URL + url
-  return url
-
-# returns the config filename corresponding to a URL
-def _get_config_filename(url):
-  return hashlib.md5(url.encode()).hexdigest() + ".json"
-  
 # return the last page number in a section
 # TODO: unit test
 def _get_last_page_index(soup):
@@ -92,7 +81,7 @@ def video_pages(url):
   links = filter(None, links)
   
   # return a list of absolute URLs from that list
-  return [_get_absolute_url(link.get('href')) for link in links]
+  return [utils.get_absolute_url(link.get('href')) for link in links]
 
 # returns the video config file URL from a video page
 def video_config_url(url):
@@ -103,7 +92,7 @@ def video_config_url(url):
     return None
   
   # get the config file url
-  return _get_absolute_url(player.get('data-src'))
+  return utils.get_absolute_url(player.get('data-src'))
   
 # returns the video json config for a video page
 # TODO: unit test
@@ -114,10 +103,8 @@ def video_config(url):
   if not config_url:
     return None
   
-  config_file = _get_config_filename(url)
-  
   # load and cache the config file
-  json_config = io.load_page(config_url)
+  json_config = loader.load_page(config_url)
 
   # turn the json string into a json dict
   return json.loads(json_config)
