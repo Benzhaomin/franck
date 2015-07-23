@@ -1,3 +1,6 @@
+# Franck 0.5.0 (July xth 2015)
+  - Switched from Flash to Bottle [franck-http]
+
 # Franck 0.4.0 (July 23th 2015)
   - File naming and structure overhaul
   - Added tests [franck]

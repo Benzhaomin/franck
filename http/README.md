@@ -1,3 +1,7 @@
-# Requirements:
+# Running
 
-- Bottle >= 0.10 (http://bottlepy.org/docs/dev/index.html)
+python franck-http.py --log=DEBUG
+
+# Request
+
+curl http://localhost:8080/video/<path>
