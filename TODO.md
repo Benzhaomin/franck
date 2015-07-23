@@ -1,17 +1,18 @@
-* Bugfix
+# Bugfix
   - 
   
-* High
-  - 
+# High
+  - clean cli interface [franck-cli]
+  - add more unit testing (crawler, cache, loader) [franck][franck-http][franck-cli]
+  - build script [franck][franck-http][franck-cli]
+  - requirements/environment clean-up [franck][franck-http][franck-cli]
+  - arch packages [franck][franck-http][franck-cli]
+  - debian packages [franck][franck-http][franck-cli]
   
-* Normal
-  - cleanly split the project into api, website, ff extension, cli utils
-  - add more unit testing (crawler/bootstrap)
-  - add prev/next to the front-end
-  - arch package
-  - debian package
+# Normal
+  - add prev/next to load more results [franck-http]
   
-* Low
-  - better downloader
-  - firefox extension
-  - random video(s) from the local cache
+# Low
+  - add a cache bootstraper using the crawler [franck]
+  - firefox extension [franck-firefox]
+  - random video(s) from the local cache [franck][franck-http]

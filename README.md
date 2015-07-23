@@ -1,17 +1,13 @@
-Franck.py
+# franck
 
-Get video details (title, formats, etc) of a Jeuxvideo.com video from its URL.
+Python 3 library to parse JeuxVideo.com markup.
 
-API running on Flask, simple front-end.
+# franck-http
 
-francky.py and get_gl.sh help download a video directly from the cli
+JSON api to get a list of videos with cover and details found at a given URL.
 
-usage:
+CSS/JS page to query and display results in a list and a video player.
+  
+# franck-cli
 
-python francky.py http://PAGEWITHAVIDEOINSIDE
-returns a wget formatted url to download the highest quality format
-
-sh francky.sh http://PAGEWITHAVIDEOINSIDE download the video to a preset download folder
-
-can be parallelized with GNU parallel (or other):
-parallel -a FILEWITHURLSINSIDE francky.sh
+CLI api to get the download URL of a video from its URL.
