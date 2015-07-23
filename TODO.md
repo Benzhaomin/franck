@@ -2,7 +2,6 @@
   - 
   
 # High
-  - clean cli interface [franck-cli]
   - add more unit testing (crawler, cache, loader) [franck][franck-http][franck-cli]
   - build script [franck][franck-http][franck-cli]
   - requirements/environment clean-up [franck][franck-http][franck-cli]
