@@ -24,4 +24,4 @@ def video(url):
   
   v = Video(url)
   v.load()
-  return v.json
+  return v

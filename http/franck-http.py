@@ -15,24 +15,27 @@ import franck.api as api
 def videos(url):
     # TODO: check args
     
-    videos_info = api.videos(url)
+    results = api.videos(url)
     
-    if len(videos_info) == 0:
-        video_info = api.video(url)
+    if len(results) == 0:
+        results = api.video(url)
         
-        if len(video_info) > 0:
-            videos_info = [video_info]
+        if results:
+            results = [results]
     
-    return {'videos': videos_info}
+    # return a json representation of the video
+    results = [video.json for video in results]
+    
+    return {'videos': results}
     
 @get("/video/<url:path>")
 # curl http://localhost:8080/video/http://www.jeuxvideo.com/videos/gaming-live/433637/rocket-league-du-foot-motorise-a-l-essai-en-split-screen.htm
 def video(url):
     # TODO: check args
     
-    video_info = api.video(url)
+    result = api.video(url)
     
-    return video_info
+    return result.json
     
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
