@@ -39,3 +39,34 @@ class Video:
       'description': info['description'],
       'timeline': info['thumbnail'].replace('high.jpg', '0000.jpg'),
     }
+  
+  # returns a source dict {'file': url, 'size':0}
+  def get_source(self, quality='1080p'):
+    # json must be loaded
+    if not self.json:
+      logger.debug("[video] tried to get a source on an unloaded video")
+      return None
+    
+    # no quality = no source
+    if not quality:
+      return None
+      
+    sources = self.json['sources']
+    
+    # try to get the requested quality
+    if quality in sources:
+      return sources[quality]
+    
+    # otherwise just get the best we can find
+    return self.get_source(self._get_best_quality())
+
+  # returns a source dict ['file': url, 'size':0]
+  def _get_best_quality(self):
+    sources = self.json['sources']
+    
+    for quality in ['1080p', '720p', '400p', '272p']:
+      if quality in sources:
+        return quality
+    
+    logger.warning("[video] found a loaded video with no source file %s", video.url)
+    
