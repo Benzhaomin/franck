@@ -1,4 +1,5 @@
-# Franck 0.4.0 (July xth 2015)
+# Franck 0.4.0 (July 23th 2015)
+  - File naming and structure overhaul
   - Added tests [franck]
   - Added logging [franck][franck-http]
   - Pure CSS responsive grid [franck-http] 
