@@ -69,7 +69,8 @@ def read(uri):
     _refresh(filename)
   
   logger.debug("[cache] read: %s", filename)
-  return open(path).read()
+  with open(path) as cached:
+    return cached.read()
 
 def write(uri, content):
   filename = _url_to_filename(uri)
