@@ -12,7 +12,10 @@ class Video:
   def __init__(self, url):
     self.url = url
     self.json = None
-    
+  
+  def __eq__(self, other):
+    return isinstance(other, Video) and self.url == other.url
+  
   def load(self):
     if self.json:
       return self
