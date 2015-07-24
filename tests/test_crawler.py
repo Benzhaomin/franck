@@ -5,8 +5,6 @@ import os
 import unittest
 from unittest.mock import patch
 
-from bs4 import BeautifulSoup
-
 from franck.crawler import crawl
 
 def get_video_pages(url):
