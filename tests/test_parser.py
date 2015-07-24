@@ -4,6 +4,7 @@
 import os
 import json
 import unittest
+import re
 from unittest.mock import patch
 
 from bs4 import BeautifulSoup
@@ -14,6 +15,7 @@ from franck.parser import video_config
 from franck.parser import video_info
 from franck.parser import _get_last_page_index
 from franck.parser import index
+from franck.parser import _get_video_link
 
 # load a remote html file from a local copy and return it as a Soup object
 def get_local_soup(filename):
@@ -177,6 +179,46 @@ class TestParserIndex(unittest.TestCase):
   def test_index_not_last_page(self, foo):
     expected = ['http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=' + str(i) for i in range(1, 303+1)]
     actual = index('http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=290')
+    self.assertEqual(actual, expected)
+    
+def _get_video_link(article):
+  # try with the standard format (href="/videos/*)
+  link = article.find(href=re.compile("^/videos/"))
+  
+  if not link:
+    # custom format links (specific to a section)
+    title = article.find("h2", class_="titre-item")
+
+    if title:
+      link = title.a
+  
+  return link
+  
+# franck.parser._get_video_link()
+class TestParserIndex(unittest.TestCase):
+  
+  # check that we extract video link from articles whatever their format is
+  def test_get_video_link(self):
+    soup = get_local_soup('video_thumbnail_examples.html')
+    articles = soup.find_all("article")
+    
+    expected = [
+      '/videos/chroniques/434958/speed-game-live-any-majora-s-mask-fini-en-moins-de-1h35.htm',
+      '/videos/chroniques/433900/speed-game-hotline-miami-2-en-moins-de-40-minutes.htm',
+      '/videos/435083/une-petite-dose-de-gameplay-pour-fallout-4.htm',
+      '/videos/435143/rayman-adventures-les-10-premieres-minutes-de-gameplay.htm',
+      '/videos/gaming-live/435104/batgirl-une-affaire-de-famille-qui-tourne-a-la-debandade.htm',
+      '/gaming-live/0001/00014554/trauma-center-under-the-knife-nintendo-ds-video-3-00000258.htm',
+    ]
+    actual = [_get_video_link(article).get('href') for article in articles]
+    self.assertEqual(actual, expected)
+  
+  # check that we properly handle articles without links
+  def test_get_video_link_no_link(self):
+    article = BeautifulSoup("<article/>", 'html.parser')
+    
+    expected = None
+    actual = _get_video_link(article)
     self.assertEqual(actual, expected)
 
 if __name__ == '__main__':

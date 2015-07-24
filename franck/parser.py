@@ -51,7 +51,6 @@ def index(url):
   return [page_url + '?p=' + str(i) for i in range(1, int(last_page_index) + 1)]
 
 # returns the a tag pointing to a video page if any
-# TODO: unit test
 def _get_video_link(article):
   # try with the standard format (href="/videos/*)
   link = article.find(href=re.compile("^/videos/"))
