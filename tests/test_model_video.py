@@ -31,17 +31,63 @@ def ordered(obj):
     else:
         return obj
   
+# franck.model.video.Video.get_best_quality()
+class TestVideoGetBestQuality(unittest.TestCase):
+    
+  # check that we handle unloaded videos
+  def test_get_best_quality_unloaded(self):
+    v = Video('http://www.jeuxvideo.com/foo')
+    expected = None
+    actual = v.get_best_quality()
+    self.assertEqual(actual, expected)
+  
+  # check that we get the best quality available
+  def test_get_best_quality_has_400p(self):
+    v = build_video()
+    expected = '400p'
+    actual =  v.get_best_quality()
+    self.assertEqual(actual, expected)
+  
+  # check that we get nothing if there's no source at all
+  def test_get_best_quality_no_source(self):
+    v = build_video()
+    v.json['sources'] = {}
+    expected = None
+    actual = v.get_best_quality()
+    self.assertEqual(actual, expected)
+
 # franck.model.video.Video.get_source()
 class TestVideoGetSource(unittest.TestCase):
-    
-  # want default (1080p) has 400p max
+  
+  # check that we handle unloaded videos
+  def test_get_source_unloaded(self):
+    v = Video('http://www.jeuxvideo.com/foo')
+    expected = None
+    actual = v.get_source()
+    self.assertEqual(actual, expected)
+   
+  # check that we handle empty quality requests
+  def test_get_source_none_quality(self):
+    v = build_video()
+    expected = 'http://videohd.jeuxvideo.com/200705/kingdom_hearts_gba-00000849-high.mp4'
+    actual = v.get_source(quality=None)['file']
+    self.assertEqual(actual, expected)
+  
+  # check that we handle invalid quality requests
+  def test_get_source_foo_quality(self):
+    v = build_video()
+    expected = 'http://videohd.jeuxvideo.com/200705/kingdom_hearts_gba-00000849-high.mp4'
+    actual = v.get_source('foo')['file']
+    self.assertEqual(actual, expected)
+  
+  # check that the quality is auto-selected if missing, want default (1080p) has 400p max
   def test_get_source_default_quality_auto_select(self):
     v = build_video()
     expected = 'http://videohd.jeuxvideo.com/200705/kingdom_hearts_gba-00000849-high.mp4'
     actual = v.get_source()['file']
     self.assertEqual(actual, expected)
     
-  # want something else (272p) has it
+  # check that the quality is correct, want 272p, has 400p too, ignored
   def test_get_source_select_quality_has_it(self):
     v = build_video()
     expected = 'http://video.jeuxvideo.com/200705/kingdom_hearts_gba-00000849-low.mp4'
