@@ -2,7 +2,7 @@
   - 
   
 # High
-  - add more unit testing (crawler, cache, loader) [franck][franck-http][franck-cli]
+  - add more unit testing (api, franck-cli, franck-http) [franck][franck-http][franck-cli]
   - build script [franck][franck-http][franck-cli]
   - requirements/environment clean-up [franck][franck-http][franck-cli]
   - arch packages [franck][franck-http][franck-cli]
