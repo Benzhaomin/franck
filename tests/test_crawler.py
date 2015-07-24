@@ -25,7 +25,7 @@ def ordered(obj):
     else:
         return obj
 
-# franck.parser.video_pages()
+# franck.crawler.crawl()
 class TestCrawlerCrawl(unittest.TestCase):
 
   # check that we find all video page URLs in a 2 pages section
