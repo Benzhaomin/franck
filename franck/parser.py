@@ -21,7 +21,6 @@ def _get_soup(url, cache=False):
   return BeautifulSoup(html, 'html.parser')
 
 # return the last page number in a section
-# TODO: unit test
 def _get_last_page_index(soup):
   try:
     div = soup.find_all("div", class_="bloc-liste-num-page")[0]

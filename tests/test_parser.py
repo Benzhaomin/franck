@@ -12,6 +12,7 @@ from franck.parser import video_pages
 from franck.parser import video_config_url
 from franck.parser import video_config
 from franck.parser import video_info
+from franck.parser import _get_last_page_index
 
 # load a remote html file from a local copy and return it as a Soup object
 def get_local_soup(filename):
@@ -122,5 +123,37 @@ class TestParserVideoInfo(unittest.TestCase):
     actual = video_info('')
     self.assertEqual(actual, expected)
 
+def _get_last_page_index(soup):
+  try:
+    div = soup.find_all("div", class_="bloc-liste-num-page")[0]
+  
+    return int(div.find_all("span")[-1].get_text())
+  except IndexError:
+    return 0
+    
+class TestParserGetLastPage(unittest.TestCase):
+  
+  # check that we get 0 if there's no index
+  def test_get_last_page_noindex(self):
+    soup = get_local_soup('404.html')
+    expected = 0
+    actual = _get_last_page_index(soup)
+    self.assertEqual(actual, expected)
+  
+  # check that we get the right last page when we are on it already
+  def test_get_last_page_is_last_page(self):
+    soup = get_local_soup('video_list_p303.html')
+    expected = 303
+    actual = _get_last_page_index(soup)
+    self.assertEqual(actual, expected)
+  
+  # check that we get the right last page when we are on some other page
+  def test_get_last_page_not_last_page(self):
+    soup = get_local_soup('video_list_p290.html')
+    expected = 300 # the actual last page isn't shown there
+    actual = _get_last_page_index(soup)
+    self.assertEqual(actual, expected)
+  
+  
 if __name__ == '__main__':
   unittest.main()
