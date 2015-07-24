@@ -16,6 +16,9 @@ class Video:
   def __eq__(self, other):
     return isinstance(other, Video) and self.url == other.url
   
+  def __ne__(self, other):
+    return not self.__eq__(other)
+
   def load(self):
     if self.json:
       return self
