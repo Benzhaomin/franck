@@ -28,56 +28,63 @@ def _filename_to_url(filename):
   url = urllib.parse.unquote(filename)
   return utils.get_absolute_url(url)
 
-# removes the cached file after some time
-def _invalidate(filename, expiry):
-  path = os.path.join(CACHEDIR, filename)
-  
-  if os.path.exists(path):
-    logger.debug("[cache] invalidate?: %s, expiring after %s", filename, expiry)
-    modification_time = datetime.datetime.fromtimestamp(os.path.getmtime(path))
-    expiry_time = modification_time + expiry
-    
-    if expiry_time < datetime.datetime.now():
-      os.remove(path)
-      logger.debug("[cache] purged: %s because %s > %s", path, expiry_time, datetime.datetime.now())
-    else:
-      logger.debug("[cache] didn't purge: %s because %s < %s", filename, expiry_time, datetime.datetime.now())
-  
-# invalidates the cache when necessary
-def _refresh(filename):
+# returns a datetime equal to the max lifetime of a cached file depending on its kind
+def _get_cache_policy(filename):
   # never invalidate config files
   if filename.startswith('contenu%2Fmedias'):
-    return
+    return None
   
   uri = _filename_to_url(filename)
   
   # short cache for lists
   if not uri.endswith('.htm') or utils.get_relative_url(uri).count('/') == 0:
-    _invalidate(filename, SHORT_EXPIRY)
-    return
+    return SHORT_EXPIRY
+    
+  # anything else follows the default expiry time
+  return DEFAULT_EXPIRY
+
+# removes cached files if expired
+def _is_expired(filename, expiry):
+  path = os.path.join(CACHEDIR, filename)
+  modification_time = datetime.datetime.fromtimestamp(os.path.getmtime(path))
+  expiry_time = modification_time + expiry
   
-  # invalidate anything else following the default expiry time
-  _invalidate(filename, DEFAULT_EXPIRY)
+  return expiry_time < datetime.datetime.now()
+    
+# check the current cache in case this file is there but expired
+def _expire(filename):
+  # find out when the file should expire and check if it has
+  expiry = _get_cache_policy(filename)
+  expired = _is_expired(filename, expiry)
   
-# raises IOError
+  # remove expired files from disk
+  if expired:
+    os.remove(os.path.join(CACHEDIR, filename))
+    logger.debug("[cache] cached file purged: %s", filename)
+  else:
+    logger.debug("[cache] cached file still valid: %s", filename)
+
+# returns the contents of the cached file for that uri, raises FileNotFoundError
 def read(uri):
   filename = _url_to_filename(uri)
   path = os.path.join(CACHEDIR, filename)
-  
-  # bypass cache invalidation on new URIs
-  if os.path.exists(path):
-    _refresh(filename)
-  
   logger.debug("[cache] read: %s", filename)
+  
+  # remove old cache file
+  if os.path.exists(path):
+    _expire(filename)
+  
+  # read the file from disk
   with open(path) as cached:
     return cached.read()
 
+# cache content found at that uri to a file
 def write(uri, content):
   filename = _url_to_filename(uri)
-  logger.debug("[cache] write: %s", filename)
   path = os.path.join(CACHEDIR, filename)
+  logger.debug("[cache] write: %s %s characters", filename, len(content))
   
+  # write the content to disk
   with open(path, "w+") as cache:
-    logger.debug("[cache] will cache: %s characters", len(content))
     cache.write(content)
 
