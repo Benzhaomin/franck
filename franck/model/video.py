@@ -28,6 +28,8 @@ class Video:
     
     self.json = self.beautify(config, info)
   
+    return self
+
   def beautify(self, config, info):
     if not config or not info:
       logger.warning("[video] video data not found at %s", self.url)
