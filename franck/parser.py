@@ -29,23 +29,22 @@ def _get_last_page_index(soup):
   except IndexError:
     return 0
 
-# returns a list of urls that span the whole section (page 1 to page max)
-# TODO: unit test
+# returns a list of urls that span the whole section (page 1 to last page)
 def index(url):
   soup = _get_soup(url)
   page_url = url.split('?')[0]
   
-  # get last link, might not be the absolute last (eg 300 out of 303)
+  # get the last link on this page, it might not be the absolute last (eg 300 out of 303)
   last_page_index = _get_last_page_index(soup)
   
-  if last_page_index == -1:
+  if last_page_index == 0:
     return []
   
-  # load last link
+  # load that last link
   soup = _get_soup(page_url + '?p=' + str(last_page_index))
   last_page_index = _get_last_page_index(soup)
   
-  if last_page_index == -1:
+  if last_page_index == 0:
     return []
   
   # return a sorted list of absolute urls for all the pages in the section
