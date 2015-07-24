@@ -33,6 +33,7 @@ def ordered(obj):
     else:
         return obj
 
+# franck.parser.video_pages()
 class TestParserVideoPages(unittest.TestCase):
 
   # check that we find all video page URLs on the homepage
@@ -70,7 +71,9 @@ class TestParserVideoPages(unittest.TestCase):
     actual = video_pages('')
     self.assertEqual(actual, expected)
 
+# franck.parser.video_config_url()
 class TestParserVideoConfigUrl(unittest.TestCase):
+
   # check that we find the URL of the config file on a video page
   @patch('franck.parser._get_soup', return_value=get_local_soup('video_page.html'))
   def test_video_config_url(self, foo):
@@ -92,7 +95,9 @@ class TestParserVideoConfigUrl(unittest.TestCase):
     actual = video_config_url('')
     self.assertEqual(actual, expected)
 
+# franck.parser.video_config()
 class TestParserVideoConfig(unittest.TestCase):
+
   # check that we get None on unexisting pages
   @patch('franck.parser.video_config_url', return_value=None)
   def test_video_config_404(self, foo):
@@ -108,7 +113,9 @@ class TestParserVideoConfig(unittest.TestCase):
     actual = video_config('')
     self.assertEqual(ordered(actual), ordered(expected))
 
+# franck.parser.video_info()
 class TestParserVideoInfo(unittest.TestCase):
+
   # check that we correctly parse data on a video page
   @patch('franck.parser._get_soup', return_value=get_local_soup('video_page.html'))
   def test_video_info(self, foo):
@@ -123,37 +130,30 @@ class TestParserVideoInfo(unittest.TestCase):
     actual = video_info('')
     self.assertEqual(actual, expected)
 
-def _get_last_page_index(soup):
-  try:
-    div = soup.find_all("div", class_="bloc-liste-num-page")[0]
-  
-    return int(div.find_all("span")[-1].get_text())
-  except IndexError:
-    return 0
-    
+# franck.parser._get_last_page_index()
 class TestParserGetLastPage(unittest.TestCase):
-  
+
   # check that we get 0 if there's no index
   def test_get_last_page_noindex(self):
     soup = get_local_soup('404.html')
     expected = 0
     actual = _get_last_page_index(soup)
     self.assertEqual(actual, expected)
-  
+
   # check that we get the right last page when we are on it already
   def test_get_last_page_is_last_page(self):
     soup = get_local_soup('video_list_p303.html')
     expected = 303
     actual = _get_last_page_index(soup)
     self.assertEqual(actual, expected)
-  
+
   # check that we get the right last page when we are on some other page
   def test_get_last_page_not_last_page(self):
     soup = get_local_soup('video_list_p290.html')
     expected = 300 # the actual last page isn't shown there
     actual = _get_last_page_index(soup)
     self.assertEqual(actual, expected)
-  
-  
+
+
 if __name__ == '__main__':
   unittest.main()
