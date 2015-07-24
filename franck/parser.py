@@ -15,7 +15,7 @@ from bs4 import BeautifulSoup
 import franck.io.loader as loader
 import franck.utils as utils
 
-# return a soup object for the given url, optionaly using a local cache
+# return a soup object for the given url, optionally using a local cache
 def _get_soup(url, cache=False):
   html = loader.load_page(url)
   return BeautifulSoup(html, 'html.parser')
