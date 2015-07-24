@@ -131,7 +131,7 @@ class TestParserVideoInfo(unittest.TestCase):
     self.assertEqual(actual, expected)
 
 # franck.parser._get_last_page_index()
-class TestParserGetLastPage(unittest.TestCase):
+class TestParserGetLastPageIndex(unittest.TestCase):
 
   # check that we get 0 if there's no index
   def test_get_last_page_noindex(self):
