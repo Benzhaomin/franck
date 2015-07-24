@@ -13,12 +13,20 @@ from franck.parser import video_config_url
 from franck.parser import video_config
 from franck.parser import video_info
 from franck.parser import _get_last_page_index
+from franck.parser import index
 
 # load a remote html file from a local copy and return it as a Soup object
 def get_local_soup(filename):
   with open(os.path.join(os.path.dirname(__file__), 'files', filename)) as htmlfile:
     html = htmlfile.read()
     return BeautifulSoup(html, 'html.parser')
+
+# allow testing recursive index searching
+def get_list_soup(url):
+  if url.endswith('290'):
+    return get_local_soup('video_list_p290.html')
+  else:
+    return get_local_soup('video_list_p303.html')
 
 def load_video_config(url):
   with open(os.path.join(os.path.dirname(__file__), 'files', 'video_config.json')) as jsondump:
@@ -154,6 +162,22 @@ class TestParserGetLastPageIndex(unittest.TestCase):
     actual = _get_last_page_index(soup)
     self.assertEqual(actual, expected)
 
+# franck.parser.index()
+class TestParserIndex(unittest.TestCase):
+
+  # check that we get an empty list if there's no index
+  @patch('franck.parser._get_soup', return_value=get_local_soup('404.html'))
+  def test_index_404(self, foo):
+    expected = []
+    actual = index('url')
+    self.assertEqual(actual, expected)
+  
+  # check that we an empty list if there's no index
+  @patch('franck.parser._get_soup', side_effect=get_list_soup)
+  def test_index_not_last_page(self, foo):
+    expected = ['http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=' + str(i) for i in range(1, 303+1)]
+    actual = index('http://www.jeuxvideo.com/toutes-les-videos/type-7340/?p=290')
+    self.assertEqual(actual, expected)
 
 if __name__ == '__main__':
   unittest.main()
