@@ -36,6 +36,25 @@ def get_soup_404(url, cache = None):
   
 def get_soup_no_video(url, cache = None):
   return _get_local_soup('no_video_page.html')
+
+def return_none(foo = None, bar = None, baz = None):
+  return None
+
+def load_video_config(url):
+  with open(os.path.join(os.path.dirname(__file__), 'files', 'video_config.json')) as jsondump:
+    return jsondump.read()
+
+def get_config_url(url):
+  return 'http://www.jeuxvideo.com/gaming-live/0001/00011717/kingdom-hearts-chain-of-memories-gameboy-advance-gba-sora-00000849.htm'
+
+# recursive ordering (dict/list with nested dict/list)
+def ordered(obj):
+    if isinstance(obj, dict):
+        return sorted((k, ordered(v)) for k, v in obj.items())
+    if isinstance(obj, list):
+        return sorted(ordered(x) for x in obj)
+    else:
+        return obj
   
 class TestParserVideoPages(unittest.TestCase):
   
@@ -96,9 +115,21 @@ class TestParserVideoConfigUrl(unittest.TestCase):
     actual = video_config_url('')
     self.assertEqual(actual, expected)
 
-# TODO: check that we can load a config file from a video page
 class TestParserVideoConfig(unittest.TestCase):
-  pass
+  # check that we get None on unexisting pages
+  @patch('franck.parser.video_config_url', side_effect=return_none)
+  def test_video_config_404(self, return_none):
+    expected = None
+    actual = video_config('')
+    self.assertEqual(actual, expected)
+
+  # check that we get a proper json dict
+  @patch('franck.parser.video_config_url', side_effect=get_config_url)
+  @patch('franck.parser.loader.load_page', side_effect=load_video_config)
+  def test_video_config_has_it(self, foo, bar):
+    expected = json.loads(load_video_config(''))
+    actual = video_config('')
+    self.assertEqual(ordered(actual), ordered(expected))
 
 class TestParserVideoInfo(unittest.TestCase):
   # check that we correctly parse data on a video page
@@ -110,14 +141,7 @@ class TestParserVideoInfo(unittest.TestCase):
     
   # check that we get None on unexisting pages
   @patch('franck.parser._get_soup', side_effect=get_soup_404)
-  def test_video_config_404(self, get_soup_404):   
-    expected = None
-    actual = video_info('')
-    self.assertEqual(actual, expected)
-    
-  # check that we get None on pages without config
-  @patch('franck.parser._get_soup', side_effect=get_soup_no_video)
-  def test_video_config_url_no_video(self, get_soup_no_video):   
+  def test_video_info_404(self, get_soup_404):
     expected = None
     actual = video_info('')
     self.assertEqual(actual, expected)

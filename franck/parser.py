@@ -98,7 +98,6 @@ def video_config_url(url):
   return utils.get_absolute_url(player.get('data-src'))
   
 # returns the video json config for a video page
-# TODO: unit test
 def video_config(url):
   # get the config file url
   config_url = video_config_url(url)
