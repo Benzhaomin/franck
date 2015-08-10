@@ -38,10 +38,10 @@ The http module contains two parts:
 - a JSON API to get a list of videos with cover and details found at a given URL
 - an HTML page to query that API, display results and an inline a video player.
 
-More details at (http/README.md)[./http/README.md]
+More details at [http/README.md](http/README.md)
 
 # franck-cli
 
 CLI API to get the download URL of one of more videos from an URL.
 
-More details at (cli/README.md)[./cli/README.md]
+More details at [cli/README.md](cli/README.md)
