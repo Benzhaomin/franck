@@ -1,0 +1,31 @@
+# Maintainer: Benjamin Maisonnas <ben@wainei.net>
+
+pkgname=franck
+pkgver=0.5.3
+pkgrel=1
+pkgdesc="Python library to parse Jeuxvideo.com video pages. Includes a CLI and a JSON API."
+arch=(any)
+url="https://github.com/Benzhaomin/franck/"
+license=('GPL3')
+groups=()
+depends=('python' 'python-beautifulsoup4' 'python-appdirs' 'python-bottle' 'python-requests')
+makedepends=('python' 'python-setuptools')
+checkdepends=('python-tox' 'python-pytest')
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=(!emptydirs)
+install=
+source=(https://github.com/Benzhaomin/$pkgname/archive/v$pkgver.zip)
+md5sums=(3a7aef6fc417ef8765817ea690920f03)
+
+check() {
+  cd "$srcdir/$pkgname-$pkgver"
+  PYTHONPATH=:`pwd`$PYTHONPATH tox
+}
+
+package() {
+  cd "$srcdir/$pkgname-$pkgver"
+  python setup.py install --root="$pkgdir/" --optimize=1
+}
