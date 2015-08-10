@@ -2,7 +2,6 @@
 
 Python 3 library to parse JeuxVideo.com markup.
 
-
 ## Installing
 
 - clone the repo
@@ -43,7 +42,7 @@ It returns all the video page url found in a whole section, those pages can then
 The http module contains two parts:
 
 - a JSON API to get a list of videos with cover and details found at a given URL
-- an HTML page to query that API, display results and an inline a video player.
+- an HTML page to query that API, display results and an inline video player.
 
 More details at [http/README.md](http/README.md)
 
