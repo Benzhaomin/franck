@@ -2,16 +2,46 @@
 
 Python 3 library to parse JeuxVideo.com markup.
 
+## Video
+
+The sole model of franck, videos. A basic usage would look like:
+```
+ v = Video("http://www.jeuxvideo.com/somevideopage")
+ v.load()
+
+ print(v.json.title)
+
+ print(v.get_best_quality())
+```
+
+## API
+
+Two functions are available to find videos at a single URL:
+- video(url): use on single video page, containing a video player
+- videos(url): use on video lists or any page with links to video pages
+
+## Cache
+
+Each video requires two files to be retrieved: its video page (HTML) and its config file (XML).
+Web requests use a local cache with its own expiration policy. Jeuxvideo.com HTTP headers can't be relied upon as they expire immediately.
+Cached files go under ```user_cache_dir/Franck```, eg. ```"/home/user/.cache/Franck/"```
+
+## Crawler
+
+The crawler can be used to heat up the cache with all video pages of a section.
+It returns all the video page url found in a whole section, those pages can then be loaded/cached and their associated config file too.
+
 # franck-http
 
-JSON api to get a list of videos with cover and details found at a given URL.
+The http module contains two parts:
 
-CSS/JS page to query and display results in a list and a video player.
+- a JSON API to get a list of videos with cover and details found at a given URL
+- an HTML page to query that API, display results and an inline a video player.
 
-## Requirements
-
-- Bottle >= 0.10 (http://bottlepy.org/docs/dev/index.html)
+More details at (http/README.md)[./http/README.md]
 
 # franck-cli
 
-CLI api to get the download URL of a video from its URL.
+CLI API to get the download URL of one of more videos from an URL.
+
+More details at (cli/README.md)[./cli/README.md]

@@ -2,8 +2,6 @@
   -
 
 # High
-  - build script [franck][franck-http][franck-cli]
-  - requirements/environment clean-up [franck][franck-http][franck-cli]
   - arch packages [franck][franck-http][franck-cli]
   - debian packages [franck][franck-http][franck-cli]
 

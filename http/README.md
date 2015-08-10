@@ -1,15 +1,17 @@
 # Running
 
-python franck-http.py --log=DEBUG
+```python franck-http --log=DEBUG```
 
 # Request
 
-curl http://localhost:8080/video/<path>
+```curl http://localhost:8080/video/<path>```
+```curl http://localhost:8080/videos/<path>```
 
 # API
 
 ## Video json format
 
+```
 {
   'id': video_id,
   'url': url of the video's page,
@@ -24,6 +26,7 @@ curl http://localhost:8080/video/<path>
   'timeline': absolute url of the video's timeline (grid of thumbnails),
   'iframe':  absolute url of the video's iframe embed,
 }
+```
 
 ## /video/<video_page>
 
