@@ -28,8 +28,8 @@ Two functions are available to find videos at a single URL:
 
 ## Cache
 
-Each video requires two files to be retrieved: its video page (HTML) and its config file (XML).
-Web requests use a local cache with its own expiration policy. Jeuxvideo.com HTTP headers can't be relied upon as they expire immediately.
+Each video requires two files to be retrieved: its video page (HTML) and its config file (XML).<br>
+Web requests use a local cache with its own expiration policy. Jeuxvideo.com HTTP headers can't be relied upon as they expire immediately.<br>
 Cached files go under ```user_cache_dir/Franck```, eg. ```"/home/user/.cache/Franck/"```
 
 ## Crawler
