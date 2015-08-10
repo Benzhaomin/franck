@@ -2,6 +2,7 @@
   - Switched from Flask to Bottle [franck-http]
   - Rewrote the CLI module [franck-cli]
   - API: api.video() now returns None if no video is found at the given url [franck]
+  - Added a setup script
 
 # Franck 0.4.0 (2015/07/23)
   - File naming and structure overhaul
