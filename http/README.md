@@ -1,6 +1,6 @@
 # Running
 
-```python franck-http --log=DEBUG```
+```franck-http --log=DEBUG```
 
 # Request
 
