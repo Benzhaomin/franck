@@ -5,9 +5,9 @@
 usage: franck-http [-h] [--log LOGLEVEL] [--host HOST] [--port PORT]
 
 optional arguments:
-  -h, --help      show this help message and exit
-  --log LOGLEVEL  output log message of this level and up (default: WARNING)
-  --host HOST     hostname or ip address (default: localhost)
+  -h, --help      show this help message and exit<br>
+  --log LOGLEVEL  output log message of this level and up (default: WARNING)<br>
+  --host HOST     hostname or ip address (default: localhost)<br>
   --port PORT     port number (default: 8080)
 
 ## Request
