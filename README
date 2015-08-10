@@ -4,9 +4,8 @@ Python 3 library to parse JeuxVideo.com markup.
 
 ## Installing
 
-- clone the repo
-- go to its root
-- ```python setup.py install```
+- Source: clone the repo, ```cd``` into it, ```python setup.py install```
+- Arch Linux: get the [PKGBUILD](pkg/archlinux/PKGBUILD), ```makepkg```, ```sudo pacman -U pkg```
 
 ## Video
 
