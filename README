@@ -2,6 +2,13 @@
 
 Python 3 library to parse JeuxVideo.com markup.
 
+
+## Installing
+
+- clone the repo
+- go to its root
+- ```python setup.py install```
+
 ## Video
 
 The sole model of franck, videos. A basic usage would look like:
