@@ -15,7 +15,7 @@ def build_video(url):
 
 # franck.api.videos()
 class TestApiVideos(unittest.TestCase):
-  
+
   # check that we request parsing and return a list of results
   @patch('franck.api.parser.video_pages', return_value=['http://www.jeuxvideo.com/foo', 'http://www.jeuxvideo.com/bar', 'http://www.jeuxvideo.com/baz'])
   @patch('franck.api.video', side_effect=build_video)
@@ -24,9 +24,17 @@ class TestApiVideos(unittest.TestCase):
     actual = videos('http://www.jeuxvideo.com/list')
     self.assertEqual(actual, expected)
 
+  # check that we return an empty list when there are no results
+  @patch('franck.api.parser.video_pages', return_value=[])
+  @patch('franck.api.video', side_effect=build_video)
+  def test_api_videos_no_result(self, foo, bar):
+    expected = []
+    actual = videos('http://www.jeuxvideo.com/novideo')
+    self.assertEqual(actual, expected)
+
 # franck.api.video()
 class TestApiVideo(unittest.TestCase):
-  
+
   # check that we build a Video object and load it
   def test_api_video(self):
     with patch('franck.model.video.Video.load') as m:
@@ -34,6 +42,6 @@ class TestApiVideo(unittest.TestCase):
       actual = video('http://www.jeuxvideo.com/foo')
       self.assertEqual(actual, expected)
       m.assert_called_once_with()
-  
+
 if __name__ == '__main__':
   unittest.main()
