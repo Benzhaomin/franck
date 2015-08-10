@@ -35,10 +35,10 @@ class TestApiVideos(unittest.TestCase):
 # franck.api.video()
 class TestApiVideo(unittest.TestCase):
 
-  # check that we build a Video object and load it
+  # check that we build a Video object and try to load it
   def test_api_video(self):
     with patch('franck.model.video.Video.load') as m:
-      expected = Video('http://www.jeuxvideo.com/foo')
+      expected = None
       actual = video('http://www.jeuxvideo.com/foo')
       self.assertEqual(actual, expected)
       m.assert_called_once_with()
