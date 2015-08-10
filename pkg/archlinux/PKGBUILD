@@ -18,7 +18,7 @@ backup=()
 options=(!emptydirs)
 install=
 source=(https://github.com/Benzhaomin/$pkgname/archive/v$pkgver.zip)
-md5sums=(3a7aef6fc417ef8765817ea690920f03)
+md5sums=(c357b76b06bb621b4a46902df70da526)
 
 check() {
   cd "$srcdir/$pkgname-$pkgver"
