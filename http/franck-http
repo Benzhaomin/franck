@@ -65,4 +65,4 @@ if __name__ == "__main__":
     logging.basicConfig(level=numeric_level, format='%(asctime)s %(message)s')
 
     # gogogo
-    run(app, host=args.host, port=int(args.port), debug=True)
+    run(app, host=args.host, port=int(args.port), debug=(numeric_level==logging.DEBUG))
