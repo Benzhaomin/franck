@@ -1,3 +1,6 @@
+# Franck 0.5.1 (2015/08/10)
+  - Fixed api usage: /video/dummy doesn't fail anymore [franck-http]
+
 # Franck 0.5.0 (2015/08/10)
   - Switched from Flask to Bottle [franck-http]
   - Rewrote the CLI module [franck-cli]

@@ -14,41 +14,44 @@ import franck.api as api
 # curl http://localhost:8080/videos/http://www.jeuxvideo.com/toutes-les-videos/type-7340/machine-40/genre-2050/
 def videos(url):
     # TODO: check args
-    
+
     results = api.videos(url)
-    
+
     if len(results) == 0:
-        results = api.video(url)
-        
-        if results:
-            results = [results]
-    
+        video = api.video(url)
+
+        if video:
+            results = [video]
+
     # return a json representation of the video
     results = [video.json for video in results]
-    
+
     return {'videos': results}
-    
+
 @get("/video/<url:path>")
 # curl http://localhost:8080/video/http://www.jeuxvideo.com/videos/gaming-live/433637/rocket-league-du-foot-motorise-a-l-essai-en-split-screen.htm
 def video(url):
     # TODO: check args
-    
+
     result = api.video(url)
-    
-    return result.json
-    
+
+    if result:
+        return result.json
+    else:
+        return {}
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--log', dest='loglevel', default='WARNING')
     args = parser.parse_args()
-    
+
     # set logger level
     numeric_level = getattr(logging, args.loglevel.upper(), None)
     if not isinstance(numeric_level, int):
         raise ValueError('Invalid log level: %s' % loglevel)
-    
+
     logging.basicConfig(level=numeric_level, format='%(asctime)s %(message)s')
-    
+
     # gogogo
     run(host='localhost', port=8080, debug=True)
-    
+
