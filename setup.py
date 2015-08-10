@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'franck',
-    version = '0.5.2',
+    version = '0.5.3',
     packages = find_packages(),
     scripts = ['http/franck-http', 'cli/franck-cli'],
     test_suite = 'tests',
