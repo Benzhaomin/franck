@@ -3,14 +3,20 @@
 
 import argparse
 import logging
-
 logger = logging.getLogger('franck.logger')
 
-from bottle import get, run
+from bottle import Bottle, route, response, run
+app = Bottle()
 
 import franck.api as api
 
-@get("/videos/<url:path>")
+@app.hook('after_request')
+def enable_cors():
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'PUT, GET, POST, DELETE, OPTIONS'
+    response.headers['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
+
+@app.route(path="/videos/<url:path>", method="GET")
 # curl http://localhost:8080/videos/http://www.jeuxvideo.com/toutes-les-videos/type-7340/machine-40/genre-2050/
 def videos(url):
     # TODO: check args
@@ -28,7 +34,7 @@ def videos(url):
 
     return {'videos': results}
 
-@get("/video/<url:path>")
+@app.route(path="/video/<url:path>", method="GET")
 # curl http://localhost:8080/video/http://www.jeuxvideo.com/videos/gaming-live/433637/rocket-league-du-foot-motorise-a-l-essai-en-split-screen.htm
 def video(url):
     # TODO: check args
@@ -53,5 +59,4 @@ if __name__ == "__main__":
     logging.basicConfig(level=numeric_level, format='%(asctime)s %(message)s')
 
     # gogogo
-    run(host='localhost', port=8080, debug=True)
-
+    run(app, host='localhost', port=8080, debug=True)
