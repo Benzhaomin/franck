@@ -33,30 +33,33 @@ def _get_cache_policy(filename):
   # never invalidate config files
   if filename.startswith('contenu%2Fmedias'):
     return None
-  
+
   uri = _filename_to_url(filename)
-  
+
   # short cache for lists
   if not uri.endswith('.htm') or utils.get_relative_url(uri).count('/') == 0:
     return SHORT_EXPIRY
-    
+
   # anything else follows the default expiry time
   return DEFAULT_EXPIRY
 
 # removes cached files if expired
 def _is_expired(filename, expiry):
+  if expiry is None:
+    return False
+
   path = os.path.join(CACHEDIR, filename)
   modification_time = datetime.datetime.fromtimestamp(os.path.getmtime(path))
   expiry_time = modification_time + expiry
-  
+
   return expiry_time < datetime.datetime.now()
-    
+
 # check the current cache in case this file is there but expired
 def _expire(filename):
   # find out when the file should expire and check if it has
   expiry = _get_cache_policy(filename)
   expired = _is_expired(filename, expiry)
-  
+
   # remove expired files from disk
   if expired:
     os.remove(os.path.join(CACHEDIR, filename))
@@ -69,11 +72,11 @@ def read(uri):
   filename = _url_to_filename(uri)
   path = os.path.join(CACHEDIR, filename)
   logger.debug("[cache] read: %s", filename)
-  
+
   # remove old cache file
   if os.path.exists(path):
     _expire(filename)
-  
+
   # read the file from disk
   with open(path) as cached:
     return cached.read()
@@ -83,7 +86,7 @@ def write(uri, content):
   filename = _url_to_filename(uri)
   path = os.path.join(CACHEDIR, filename)
   logger.debug("[cache] write: %s %s characters", filename, len(content))
-  
+
   # write the content to disk
   with open(path, "w+") as cache:
     cache.write(content)
